@@ -18,6 +18,14 @@ elif platform == "win32":
         config['path']['path'].replace('/', '\\'), 'Scripts')
 
 
+def init_project():
+    if not os.path.exists(DATA_PATH):
+        os.mkdir(DATA_PATH)
+
+    if not os.path.exists(SCRIPTS_PATH):
+        os.mkdir(SCRIPTS_PATH)
+
+
 class CreateHandler:
     '''
     Handler class for `create` command.
@@ -206,6 +214,9 @@ class CommonHandler:
         if args.subparser_name is None:
             parser.print_help()
             return
+
+        # create /Data and /Scripts folder if dont create before
+        init_project()
 
         # process the command entered
         ClassHandler = CommonHandler.commands_dict[args.subparser_name]

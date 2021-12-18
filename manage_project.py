@@ -1,3 +1,4 @@
+from sys import platform
 import os
 import argparse
 import configparser
@@ -7,9 +8,14 @@ import shutil
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-DATA_PATH = os.path.join(config['path']['path'].replace('/', '\\'), 'Data')
-SCRIPTS_PATH = os.path.join(
-    config['path']['path'].replace('/', '\\'), 'Scripts')
+if platform == "linux" or platform == "linux2" or platform == "darwin":
+    DATA_PATH = os.path.join(config['path']['path'].replace('\\', '/'), 'Data')
+    SCRIPTS_PATH = os.path.join(
+        config['path']['path'].replace('\\', '/'), 'Scripts')
+elif platform == "win32":
+    DATA_PATH = os.path.join(config['path']['path'].replace('/', '\\'), 'Data')
+    SCRIPTS_PATH = os.path.join(
+        config['path']['path'].replace('/', '\\'), 'Scripts')
 
 
 class CreateHandler:
